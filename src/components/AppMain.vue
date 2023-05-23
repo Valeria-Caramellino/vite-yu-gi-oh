@@ -41,12 +41,12 @@ export default{
  $oro: darkgoldenrod;
  div{
     background-color: white;
-    div.col-2{
+        div.col-2{
         background-color: $oro;
-      p{
-        color: white;
-    }
- }  
+            p{
+            color: white;
+            }
+        }  
     }
     
 </style>
