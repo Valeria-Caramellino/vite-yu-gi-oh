@@ -13,13 +13,15 @@ export default{
 </script>
 
 <template>
- <h1>ciao</h1>
-<!-- <pre>{{ store.ArrayCards.data[0].card_images[0].image_url_small }}</pre>-->
-    <div class="container">
-        <div class="row ">
-            <div class="col-10 mx-auto bg-dark text-light p-2">ciao</div>
+ <!--
+ <pre>{{ store.ArrayCards[0].data.length }}</pre>-->
+   <div class="container">
+        <div class="row" >
+           
+       
+           <div class="col-12 mx-auto bg-dark text-light p-2">Found {{ store.ArrayCards[0].data.length }} card </div>
             <div class="col-10 mx-auto d-flex flex-wrap">
-                <template v-for="oggetto in store.ArrayCards.data">
+                <template v-for="oggetto in store.ArrayCards[0].data">
                     <div class="col-2 text-center m-2">
                         <img :src= oggetto.card_images[0].image_url_small alt="">
                         <p>{{ oggetto.name }}</p>
@@ -27,10 +29,11 @@ export default{
                     </div>
                 </template> 
             </div>
-           
+       
+          
         </div>
         
-    </div>  
+    </div>
 </template>
 
 <style lang="scss" scoped>

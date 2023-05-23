@@ -1,5 +1,6 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
+import AppSectionSelector from './components/AppSectionSelector.vue';
 import AppMain from './components/AppMain.vue';
 
 import {store} from'./data/store';
@@ -9,6 +10,7 @@ export default{
   
   components:{
     AppHeader,
+    AppSectionSelector,
     AppMain ,
   },
   data(){
@@ -19,15 +21,13 @@ export default{
   mounted(){
     
      axios.get(this.store.urlAPI).then(oggetto => {
-      
-      this.store.ArrayCards = oggetto.data;
-      
+
+      this.store.ArrayCards.push(oggetto.data)  ;
+
       console.log(this.store.ArrayCards)
     }).catch(errore => {
 
-      //In caso di problemi, mostro l'errore in console
       console.error("Qualcosa è andato storto", errore);
-      
       this.store.ArrayCards = [];
     
     });
@@ -37,9 +37,8 @@ export default{
 </script>
 
 <template>
- 
-
   <AppHeader/>
+  <AppSectionSelector/>
   <AppMain/>
 </template>
 
