@@ -1,6 +1,6 @@
 <script>
 import AppHeader from './components/AppHeader.vue';
-import AppSectionSelector from './components/AppSectionSelector.vue';
+
 import AppMain from './components/AppMain.vue';
 
 import {store} from'./data/store';
@@ -10,7 +10,7 @@ export default{
   name:"App",
   components:{
     AppHeader,
-    AppSectionSelector,
+  
     AppMain ,
   },
   data(){
@@ -23,7 +23,7 @@ export default{
 
 <template>
   <AppHeader/>
-  <AppSectionSelector/>
+  
   <AppMain/>
 </template>
 

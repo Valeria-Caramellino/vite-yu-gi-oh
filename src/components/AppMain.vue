@@ -5,27 +5,75 @@ export default{
     name: "AppMain",
     data(){
         return{
-         store
+            store,
+            ArrayArchetype:[
+                "Tutti",
+                "Alien",
+                "Noble Knight",
+                "Melodius",
+                "Archfied",
+            ],
+            inizio :"Tutti",
         }
 
     },
+    methods:{
+        chiamataDati(indirizzo) {
+
+            this.store.loading = true;
+
+            axios.get(indirizzo).then(oggetto => {
+
+            console.log("Ricevuto:", oggetto.data)
+
+            this.store.ArrayCards = oggetto.data  ;
+
+            this.store.loading = false;
+            });
+        },
+        recuperaDati(){
+            console.log(this.inizio)
+
+            let indirizzo = this.store.urlAPI
+
+            if(this.inizio == "Alien"){
+
+                indirizzo += "?archetype=Alien";
+                console.log(this.store.urlAPI)
+            }else if(this.inizio == "Noble Knight"){
+
+                indirizzo +="?archetype=Noble%20Knight"
+            }
+
+            this.chiamataDati(indirizzo);
+        }
+    },
     mounted(){
     
-    axios.get(this.store.urlAPI).then(oggetto => {
-
-    console.log("Ricevuto:", oggetto.data)
+        this.chiamataDati(this.store.urlAPI);
     
-    this.store.ArrayCards = oggetto.data  ;
-
-    this.store.loading = false;
-    
-   })
- },
+   }
 }
+
 </script>
 
 <template>
- <!--
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2 m-2">
+                <select v-model="inizio" @change="recuperaDati">
+                    <template v-for="oggetto in ArrayArchetype">
+                        <option selected>{{ oggetto }}</option>
+                    </template>
+                </select>
+            </div>
+    
+        </div>
+    
+    </div>
+    
+    <!--
  <pre>{{ store.ArrayCards.data.length}}</pre> -->
    <div class="container">
         <div class="row" >
@@ -41,7 +89,7 @@ export default{
             
 
             <div class="col-10 mx-auto d-flex flex-wrap">
-                <template v-for="oggetto in store.ArrayCards.data">
+                <template :oggetto="oggetto" v-for="oggetto in store.ArrayCards.data">
                     <div class="col-2 text-center m-2">
                         <img :src= oggetto.card_images[0].image_url_small alt="">
                         <p>{{ oggetto.name }}</p>
@@ -55,7 +103,14 @@ export default{
         </div>
         
     </div>
-</template>
+
+
+
+    </template>
+
+
+ 
+
 
 <style lang="scss" scoped>
 //variabile colore
