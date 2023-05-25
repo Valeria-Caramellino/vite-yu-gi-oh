@@ -14,6 +14,7 @@ export default{
 
     },
     computed:{ 
+        /* cambio api iniziale che le comprende tutte in base al nome del archetype selezionato preso dal v-model della select */
         changeArrayForArchetype(){
             console.log(this.ArchetypeSelect)
 
@@ -28,14 +29,14 @@ export default{
                 indirizzo += this.ArchetypeSelect;
             
             }
-
+            /**uso metodo per prendere nuovo indirizzo */
             this.chiamataDati(indirizzo);
         } 
         
         
     },
     methods:{
-        /*ca*/
+        /*prendo api arhetype lo uso per creare array elenco select*/
         generaArchetype(){
                   
             axios.get(this.apiArchetype).then(oggetto => {
@@ -44,7 +45,7 @@ export default{
             })
 
         },
-        
+        /*creo metodo per chiamare indirizzo api che mi serve*/
         chiamataDati(indirizzo) {
 
             this.store.loading = true;
@@ -61,7 +62,7 @@ export default{
       
     },
     mounted(){
-    
+        /* alla creazione della pagina richiamo i metodi di creazione*/
         this.chiamataDati(this.store.urlAPI);
 
         this.generaArchetype();
