@@ -14,6 +14,12 @@ export default{
 
     },
     computed:{ 
+        
+        
+        
+    },
+    methods:{
+
         /* cambio api iniziale che le comprende tutte in base al nome del archetype selezionato preso dal v-model della select */
         changeArrayForArchetype(){
             console.log(this.ArchetypeSelect)
@@ -31,11 +37,8 @@ export default{
             }
             /**uso metodo per prendere nuovo indirizzo */
             this.chiamataDati(indirizzo);
-        } 
-        
-        
-    },
-    methods:{
+        },
+
         /*prendo api arhetype lo uso per creare array elenco select*/
         generaArchetype(){
                   
@@ -78,7 +81,7 @@ export default{
             <div class="row  ">
                 <div class=" col-12 bg-dark">
                 
-                    <select  @change="changeArrayForArchetype" v-model="ArchetypeSelect" >
+                    <select  @change="changeArrayForArchetype()" v-model="ArchetypeSelect" >
                         <option selected> Tutti</option>
                         <template  v-for="oggetto in ArrayArchetype">
                             
