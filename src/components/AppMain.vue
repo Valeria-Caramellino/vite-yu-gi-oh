@@ -8,25 +8,24 @@ export default{
             store,
             apiArchetype: 'https://db.ygoprodeck.com/api/v7/archetypes.php',
             urlArchetypesFilter: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=',
-            selezionatoArchetype :"Tutti",
+            ArchetypeSelect :"Tutti",
             ArrayArchetype:[],
-            urlApdate:'',
         }
 
     },
     computed:{ 
-        recuperaDati(){
-            console.log(this.selezionatoArchetype)
+        changeArrayForArchetype(){
+            console.log(this.ArchetypeSelect)
 
             let indirizzo = this.urlArchetypesFilter
 
-           if(this.selezionatoArchetype == "Tutti"){
+           if(this.ArchetypeSelect == "Tutti"){
 
                 indirizzo = this.store.urlAPI
 
-            }else if(this.selezionatoArchetype == this.selezionatoArchetype){
+            }else if(this.ArchetypeSelect == this.ArchetypeSelect){
 
-                indirizzo += this.selezionatoArchetype;
+                indirizzo += this.ArchetypeSelect;
             
             }
 
@@ -36,7 +35,7 @@ export default{
         
     },
     methods:{
-      
+        /*ca*/
         generaArchetype(){
                   
             axios.get(this.apiArchetype).then(oggetto => {
@@ -73,58 +72,58 @@ export default{
 </script>
 
 <template>
-
-    <div class="container">
-        <div class="row">
-            <div class="col-2 m-2">
-             
-                <select  @change="recuperaDati" v-model="selezionatoArchetype" >
-                    <option selected> Tutti</option>
-                    <template  v-for="oggetto in ArrayArchetype">
-                        
-                        <option >{{ oggetto.archetype_name }}</option>
-                    </template>
-                </select>
+    <main>
+        <div class="container ">
+            <div class="row  ">
+                <div class=" col-12 bg-dark">
+                
+                    <select  @change="changeArrayForArchetype" v-model="ArchetypeSelect" >
+                        <option selected> Tutti</option>
+                        <template  v-for="oggetto in ArrayArchetype">
+                            
+                            <option >{{ oggetto.archetype_name }}</option>
+                        </template>
+                    </select>
+                </div>
+        
             </div>
-    
-        </div>
-    
-    </div>
-    
-    <!--
- <pre>{{ store.ArrayCards.data.length}}</pre> -->
-   <div class="container">
-        <div class="row" >
-            
-          <template v-if="store.loading == true">
-            <div>La pagina sta caricando</div>
-          </template>
-
-          <template v-else>
-            <div class="col-12 mx-auto bg-dark text-light p-2">
-                Found {{ store.ArrayCards.data.length }} card 
-            </div>
-            
-
-            <div class="col-10 mx-auto d-flex flex-wrap">
-                <template v-for="oggetto in store.ArrayCards.data">
-                    <div class="col-2 text-center m-2">
-                        <img :src= oggetto.card_images[0].image_url_small alt="">
-                        <p>{{ oggetto.name }}</p>
-                        <p>{{ oggetto.archetype }}</p> 
-                    </div>
-                </template> 
-            </div>
-
-          </template>
-    
+        
         </div>
         
-    </div>
+        
+         <!-- <pre>{{ store.ArrayCards.data.length}}</pre> -->
+        <div class="container">
+            <div class="row" >
+                
+                <template v-if="store.loading == true">
+                    <div>La pagina sta caricando</div>
+                </template>
 
+                <template v-else>
+                    <div class="col-12 mx-auto bg-dark text-light p-2">
+                        Found {{ store.ArrayCards.data.length }} card 
+                    </div>
+                    
 
+                    <div class="col-10 mx-auto d-flex flex-wrap">
+                        <template v-for="oggetto in store.ArrayCards.data">
+                            <div class="col-2 text-center m-2">
+                                <img :src= oggetto.card_images[0].image_url_small alt="">
+                                <p>{{ oggetto.name }}</p>
+                                <p>{{ oggetto.archetype }}</p> 
+                            </div>
+                        </template> 
+                    </div>
 
-    </template>
+                </template>
+        
+            </div>
+            
+        </div>
+
+    </main>
+
+</template>
 
 
  
@@ -133,8 +132,10 @@ export default{
 <style lang="scss" scoped>
 //variabile colore
  $oro: darkgoldenrod;
- div{
-    background-color: white;
+ main{
+    width: 100%;
+    div{
+        background-color: white;
         div.col-2{
         background-color: $oro;
             p{
@@ -142,5 +143,7 @@ export default{
             }
         }  
     }
+ }
+ 
     
 </style>
