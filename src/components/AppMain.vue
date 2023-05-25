@@ -6,18 +6,46 @@ export default{
     data(){
         return{
             store,
-            ArrayArchetype:[
-                "Tutti",
-                "Alien",
-                "Noble Knight",
-                "Melodius",
-                "Archfied",
-            ],
-            inizio :"Tutti",
+            apiArchetype: 'https://db.ygoprodeck.com/api/v7/archetypes.php',
+            urlArchetypesFilter: 'https://db.ygoprodeck.com/api/v7/cardinfo.php?archetype=',
+            selezionatoArchetype :"Tutti",
+            ArrayArchetype:[],
+            urlApdate:'',
         }
 
     },
+    computed:{ 
+        recuperaDati(){
+            console.log(this.selezionatoArchetype)
+
+            let indirizzo = this.urlArchetypesFilter
+
+           if(this.selezionatoArchetype == "Tutti"){
+
+                indirizzo = this.store.urlAPI
+
+            }else if(this.selezionatoArchetype == this.selezionatoArchetype){
+
+                indirizzo += this.selezionatoArchetype;
+            
+            }
+
+            this.chiamataDati(indirizzo);
+        } 
+        
+        
+    },
     methods:{
+      
+        generaArchetype(){
+                  
+            axios.get(this.apiArchetype).then(oggetto => {
+                const risposta = oggetto.data          
+                this.ArrayArchetype = risposta
+            })
+
+        },
+        
         chiamataDati(indirizzo) {
 
             this.store.loading = true;
@@ -31,26 +59,13 @@ export default{
             this.store.loading = false;
             });
         },
-        recuperaDati(){
-            console.log(this.inizio)
-
-            let indirizzo = this.store.urlAPI
-
-            if(this.inizio == "Alien"){
-
-                indirizzo += "?archetype=Alien";
-                console.log(this.store.urlAPI)
-            }else if(this.inizio == "Noble Knight"){
-
-                indirizzo +="?archetype=Noble%20Knight"
-            }
-
-            this.chiamataDati(indirizzo);
-        }
+      
     },
     mounted(){
     
         this.chiamataDati(this.store.urlAPI);
+
+        this.generaArchetype();
     
    }
 }
@@ -62,9 +77,12 @@ export default{
     <div class="container">
         <div class="row">
             <div class="col-2 m-2">
-                <select v-model="inizio" @change="recuperaDati">
-                    <template v-for="oggetto in ArrayArchetype">
-                        <option selected>{{ oggetto }}</option>
+             
+                <select  @change="recuperaDati" v-model="selezionatoArchetype" >
+                    <option selected> Tutti</option>
+                    <template  v-for="oggetto in ArrayArchetype">
+                        
+                        <option >{{ oggetto.archetype_name }}</option>
                     </template>
                 </select>
             </div>
@@ -89,7 +107,7 @@ export default{
             
 
             <div class="col-10 mx-auto d-flex flex-wrap">
-                <template :oggetto="oggetto" v-for="oggetto in store.ArrayCards.data">
+                <template v-for="oggetto in store.ArrayCards.data">
                     <div class="col-2 text-center m-2">
                         <img :src= oggetto.card_images[0].image_url_small alt="">
                         <p>{{ oggetto.name }}</p>
